@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101329">
+  <meta name="description" content="Play Chopsticks online with friends. Live matches, smart matchmaking, player accounts, and win/loss stats.">
+  <title>Chopsticks Arena · Play online</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/styles.css">
+  <script defer src="/app.js"></script>
+</head>
+<body>
+  <div class="ambient ambient-a" aria-hidden="true"></div>
+  <div class="ambient ambient-b" aria-hidden="true"></div>
+  <header class="site-header">
+    <div class="container header-inner">
+      <button class="brand" id="brandBtn" aria-label="Chopsticks Arena home"><span class="brand-symbol">✌</span><span>CHOPSTICKS<span class="brand-highlight">.ARENA</span></span></button>
+      <div class="header-right" id="headerRight" hidden>
+        <span class="connection-dot" id="connectionDot" title="Live connection"></span>
+        <button class="header-link" id="headerFriendsBtn">Friends <span class="notification-count" id="friendBadge" hidden>0</span></button>
+        <button class="avatar-button" id="profileBtn"><span class="avatar" id="headerAvatar">A</span><span id="headerUsername">Player</span></button>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section id="authView" class="auth-layout">
+      <div class="auth-intro">
+        <span class="eyebrow"><span class="live-indicator"></span> THE CLASSIC HAND GAME, ONLINE</span>
+        <h1>Two hands.<br><em>One winner.</em></h1>
+        <p class="hero-description">Challenge your friends. Outsmart opponents. Stack your wins. Welcome to the Chopsticks arena.</p>
+        <div class="feature-chips"><span>✦ Live multiplayer</span><span>✦ Friends & challenges</span><span>✦ Saved stats</span></div>
+        <div class="hero-preview" aria-hidden="true"><span class="preview-caption">THE NEXT MOVE IS YOURS</span><div class="preview-hands"><span>✌</span><span class="preview-vs">VS</span><span>☝</span></div><span class="preview-bottom">5 KNOCKS OUT • 6 → 1 • 7 → 2</span></div>
+      </div>
+      <div class="auth-card panel">
+        <div class="auth-switch"><button type="button" id="loginTab" class="selected">Log in</button><button type="button" id="registerTab">Create account</button></div>
+        <h2 id="authTitle">Welcome back.</h2><p class="muted" id="authSubtitle">Your next win is waiting.</p>
+        <form id="authForm">
+          <label for="usernameInput">USERNAME</label>
+          <input id="usernameInput" name="username" autocomplete="username" minlength="3" maxlength="20" pattern="[A-Za-z0-9_]+" required placeholder="your_username">
+          <label for="passwordInput">PASSWORD</label>
+          <input id="passwordInput" name="password" type="password" autocomplete="current-password" minlength="8" maxlength="128" required placeholder="At least 8 characters">
+          <button class="button primary full-width auth-submit" id="authSubmit" type="submit">Log in <span>→</span></button>
+        </form>
+        <p class="form-foot">No email needed. Use a unique username and a password you'll remember.</p>
+      </div>
+    </section>
+
+    <div id="appView" hidden>
+      <section id="lobbyView" class="content-section">
+        <div class="page-heading"><div><span class="eyebrow">PLAYER DASHBOARD</span><h1>Ready to <em>play?</em></h1><p class="muted">Find a match, invite a friend, or pick up where you left off.</p></div><span class="mini-label">MULTIPLAYER • ONLINE</span></div>
+        <div class="stat-grid">
+          <div class="stat-card panel"><span>TOTAL WINS</span><strong id="winsNumber">0</strong><div class="stat-mark teal">↑</div></div>
+          <div class="stat-card panel"><span>TOTAL LOSSES</span><strong id="lossesNumber">0</strong><div class="stat-mark pink">•</div></div>
+          <div class="stat-card panel"><span>WIN RATE</span><strong id="rateNumber">—</strong><div class="stat-mark purple">%</div></div>
+        </div>
+        <div class="lobby-grid">
+          <section class="panel play-panel"><div class="section-title"><div class="title-icon">⚡</div><div><h2>Play now</h2><p>Jump straight into the action.</p></div></div>
+            <button class="button primary full-width large" id="quickMatchBtn">⚡ Find an opponent <span>→</span></button>
+            <p class="queue-status" id="queueStatus" aria-live="polite">Match with another player who's searching.</p>
+            <div class="or-divider"><span>OR CHALLENGE SOMEONE</span></div>
+            <button class="button secondary full-width" id="createRoomBtn">＋ Create a private room</button>
+            <div class="join-row"><input id="joinCodeInput" maxlength="7" placeholder="ENTER ROOM CODE" aria-label="Room code"><button class="button outline" id="joinRoomBtn">Join</button></div>
+          </section>
+          <section class="panel rules-panel"><div class="section-title"><div class="title-icon">✌</div><div><h2>Your rules</h2><p>The wraparound variant.</p></div></div>
+            <div class="rules-list"><div class="rule"><span class="rule-index">01</span><div><b>Start with 1 + 1</b><small>Each player begins with one finger on each hand.</small></div></div>
+              <div class="rule"><span class="rule-index">02</span><div><b>Tap or split</b><small>Use one living hand to tap an opponent's, or redistribute your own fingers.</small></div></div>
+              <div class="rule"><span class="rule-index">03</span><div><b>Exactly 5 = out</b><small>A total of 5 eliminates that hand. Above 5 wraps: 6→1, 7→2, 8→3.</small></div></div>
+              <div class="rule"><span class="rule-index">04</span><div><b>Last hands standing</b><small>Eliminate both opponent hands to win. You can revive a hand by splitting.</small></div></div>
+            </div>
+          </section>
+        </div>
+        <section class="panel activity-panel"><div class="activity-header"><div><h2>Your matches</h2><p class="muted">Invites, ongoing games, and recent results.</p></div><button id="refreshBtn" class="text-button">↻ Refresh</button></div><div id="matchesList" class="list-stack"><p class="empty-state">No matches yet. Create one above!</p></div></section>
+      </section>
+
+      <section id="friendsView" class="content-section" hidden>
+        <div class="page-heading"><div><span class="eyebrow">YOUR CIRCLE</span><h1>Play with <em>friends.</em></h1><p class="muted">Add players, accept requests, and challenge your crew.</p></div><button class="button outline" id="backFromFriends">← Lobby</button></div>
+        <div class="friends-grid"><div class="panel friends-main"><h2>Find a player</h2><p class="muted">Search by username to send a friend request.</p><div class="join-row search-row"><input id="friendSearchInput" maxlength="20" placeholder="Search username..." aria-label="Search username"><button class="button outline" id="searchFriendsBtn">Search</button></div><div id="searchResults" class="list-stack"></div>
+          <div class="subsection-header"><h2>My friends</h2><span class="counter" id="friendsCount">0</span></div><div id="friendsList" class="list-stack"></div></div>
+          <aside class="panel requests-panel"><h2>Friend requests</h2><p class="muted">Invitations waiting for your answer.</p><div id="incomingRequests" class="list-stack"></div><div class="subsection-header"><h3>Sent requests</h3></div><div id="outgoingRequests" class="list-stack"></div></aside></div>
+      </section>
+
+      <section id="profileView" class="content-section" hidden><div class="page-heading"><div><span class="eyebrow">ACCOUNT</span><h1>Player <em>profile.</em></h1></div><button class="button outline" id="backFromProfile">← Lobby</button></div><div class="panel profile-panel"><span class="avatar avatar-big" id="profileAvatar">A</span><h2 id="profileUsername">Player</h2><p class="muted">Your stats are saved across devices when you sign into this account.</p><div class="profile-stats" id="profileStats"></div><button class="button secondary" id="logoutBtn">Log out</button></div></section>
+
+      <section id="gameView" class="content-section" hidden>
+        <div class="game-topbar"><button class="text-button" id="backToLobby">← Back to lobby</button><span id="roomTag" class="room-tag">ROOM</span></div>
+        <div class="game-heading"><span class="eyebrow">LIVE MATCH</span><h1 id="gameHeading">Chopsticks <em>showdown.</em></h1><p id="gameSubtitle" class="muted" aria-live="polite">Waiting for the other player...</p></div>
+        <div id="gameBoard" class="panel game-board">
+          <div id="waitingPanel" class="waiting-panel" hidden><div class="waiting-illustration">✌</div><h2>Waiting for an opponent</h2><p class="muted">Share the room code or link with someone to start playing.</p><div class="room-code" id="shareCode">XXXXXXX</div><div class="waiting-actions"><button id="copyCodeBtn" class="button secondary">Copy code</button><button id="copyLinkBtn" class="button outline">Copy invite link</button></div><button class="text-button danger" id="cancelRoomBtn">Cancel room</button></div>
+          <div id="playingPanel" hidden><div class="player-meta opponent-meta"><span class="player-role">OPPONENT</span><h3 id="opponentName">Opponent</h3></div><div class="hands-row" id="opponentHands"></div><div class="arena-middle"><span class="arena-divider"></span><span class="turn-banner" id="turnBanner">YOUR TURN</span><span class="arena-divider"></span></div><div class="hands-row" id="myHands"></div><div class="player-meta me-meta"><span class="player-role">YOU</span><h3 id="myName">Player</h3></div>
+            <div class="move-console"><div id="moveHint">Choose one of your hands, then tap an opponent's hand.</div><div id="splitSection"><div class="split-title">OR REDISTRIBUTE YOUR FINGERS</div><div class="split-buttons" id="splitButtons"></div></div></div>
+          </div>
+          <div id="finishedPanel" class="finished-panel" hidden><div class="result-icon" id="resultIcon">★</div><h2 id="resultTitle">Victory!</h2><p id="resultSubtitle" class="muted"></p><button class="button primary" id="finishBackBtn">Back to lobby →</button></div>
+        </div>
+        <div class="game-footer"><span>Only a total of <strong>5</strong> knocks out a hand. 6→1 · 7→2 · 8→3</span><button id="forfeitBtn" class="text-button danger" hidden>Forfeit match</button></div>
+      </section>
+    </div>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite" hidden></div>
+</body>
+</html>
